@@ -33,7 +33,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import netscape.javascript.JSObject;
 
-
+//Francisco Jose Garcia Dominguez
 
 
 public class WebViewSample extends Application
@@ -59,8 +59,6 @@ public class WebViewSample extends Application
     }
     
 }
-
-
 
 class Browser extends Region 
 {
@@ -100,10 +98,8 @@ class Browser extends Region
     
     public Browser() 
     {
-        //apply the styles
         getStyleClass().add("browser");
         
-        //Para tratar los tres enlaces
         for (int i = 0; i < captions.length; i++) 
         {
             Hyperlink hpl = hpls[i] = new Hyperlink(captions[i]);
@@ -113,7 +109,6 @@ class Browser extends Region
             final String url = urls[i];
             final boolean addButton = (hpl.getText().equals("Help"));
             
-            //proccess event
             hpl.setOnAction(new EventHandler<ActionEvent>() 
             {
                 @Override
@@ -125,24 +120,7 @@ class Browser extends Region
             });
         }
         
-        // create the toolbar
-        toolBar = new HBox();
-        toolBar.setAlignment(Pos.CENTER);
-        toolBar.getStyleClass().add("browser-toolbar");
-        toolBar.getChildren().addAll(hpls);
-        toolBar.getChildren().add(createSpacer());
-        
-        //set action for the button
-        toggleHelpTopics.setOnAction(new EventHandler() 
-        {
-            @Override
-            public void handle(Event t) 
-            {
-                webEngine.executeScript("toggle_visibility('help_topics')");
-            }
-        });
-        
-        smallView.setPrefSize(120, 80);
+       
         
         //handle popup windows
         webEngine.setCreatePopupHandler(new Callback<PopupFeatures, WebEngine>() 
@@ -157,6 +135,24 @@ class Browser extends Region
                 }
                 
                 return smallView.getEngine();
+            }
+        });
+        
+        toolBar = new HBox();
+        toolBar.setAlignment(Pos.CENTER);
+        toolBar.getStyleClass().add("browser-toolbar");
+        toolBar.getChildren().addAll(hpls);
+        toolBar.getChildren().add(createSpacer());
+  
+        smallView.setPrefSize(120, 80);
+        
+        //set action for the button
+        toggleHelpTopics.setOnAction(new EventHandler() 
+        {
+            @Override
+            public void handle(Event t) 
+            {
+                webEngine.executeScript("toggle_visibility('help_topics')");
             }
         });
         
@@ -242,13 +238,7 @@ class Browser extends Region
         }
     }
     
-    private Node createSpacer() 
-    {
-        Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS);
-        return spacer;
-    }
-    
+   
     @Override
     protected void layoutChildren() 
     {
@@ -257,6 +247,13 @@ class Browser extends Region
         double tbHeight = toolBar.prefHeight(w);
         layoutInArea(browser,0,0,w,h-tbHeight,0, HPos.CENTER, VPos.CENTER);
         layoutInArea(toolBar,0,h-tbHeight,w,tbHeight,0,HPos.CENTER,VPos.CENTER);
+    }
+    
+    private Node createSpacer() 
+    {
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        return spacer;
     }
     
     @Override
